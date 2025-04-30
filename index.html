@@ -75,6 +75,14 @@
     }
   </style>
 </head>
+<script>
+  // Показываем контент только на главной странице
+  const isMainPage = window.location.pathname === '/' || window.location.pathname.endsWith('index.html');
+  if (!isMainPage) {
+    const mainContent = document.getElementById('main-content');
+    if (mainContent) mainContent.style.display = 'none';
+  }
+</script>
 <body>
   <div class="container">
     <div class="header">
@@ -97,8 +105,6 @@
           <div class="card">
             <a href="prof-2025/nsa-major-qualifiers/index.html">Облачные технологии. Финал Чемпионата «Профессионалы» 2025</a>
           </div>
-        </div>
-      </div>
 
     <!-- 2024 -->
     <div class="year-section">
@@ -138,7 +144,7 @@
         </div>
       </div>
     </div>
-
+    </div>
     <div class="footer">
       <p>Наши ресурсы</p>
       <a href="https://github.com/auteam-usr"><img src="src/logos/github_logo.png" alt="GitHub"></a>

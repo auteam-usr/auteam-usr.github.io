@@ -1,0 +1,273 @@
+﻿
+#>---------------------------------- Параметры конфигурации ----------------------------------<#
+
+#///::::::::::::::::::::::::::| Конфигурации ролей прав доступа |:::::::::::::::::::::::::::\\\#
+
+config_access_roles[Competitor]='Pool.Audit VM.Audit VM.Console VM.PowerMgmt'
+config_access_roles[Competitor_ISP]='VM.Audit VM.PowerMgmt'
+
+
+#///%%%%%%%%%%%%%%%%%%% Конфигурации шаблонов настроек виртуальных машин %%%%%%%%%%%%%%%%%%%\\\#
+
+config_templates[Alt-Server-10.2]='
+        templ_descr = Базовый шаблон для Альт Сервер 10.2
+        os_descr    = Альт Сервер 10.2
+        tags        = alt-server-10.2
+        bios        = ovmf
+        ostype      = l26
+        cpu         = host
+        cores       = 1
+        memory      = 1024
+        tablet      = 0
+        startup     = down=60
+        agent       = 1
+        scsihw      = virtio-scsi-single
+        boot_disk_0 = https://disk.yandex.ru/d/YR3eelCZR_JVXQ/Script-Images/alt-srv-10.2.qcow2
+        access_role = Competitor
+'
+config_templates[Alt-Workstation-10.4]='
+        templ_descr = Базовый шаблон для Альт Рабочая Станция 10.4
+        os_descr    = Альт Рабочая Станция 10.4
+        tags        = alt-ws-10.4
+        bios        = ovmf
+        ostype      = l26
+        cpu         = host
+        cores       = 1
+        memory      = 1536
+        startup     = down=60
+        agent       = 1
+        scsihw      = virtio-scsi-single
+        boot_disk_0 = https://disk.yandex.ru/d/YR3eelCZR_JVXQ/Script-Images/alt-ws-10.4.qcow2
+        access_role = Competitor
+'
+config_templates[OPNsense-24.7]='
+        templ_descr = Базовый шаблон для OPNsense 24.7
+        os_descr    = OPNsense 24.7
+        tags        = opnsense-24.7
+        bios        = ovmf
+        ostype      = other
+        agent       = 1
+        tablet      = 0
+        startup     = down=60
+        scsihw      = virtio-scsi-single
+        cpu         = host
+        cores       = 1
+        memory      = 1024
+        boot_disk_0 = https://disk.yandex.ru/d/YR3eelCZR_JVXQ/Script-Images/opnsense-24.7.qcow2
+        access_role = Competitor
+'
+config_templates[ISP]='
+        templ_descr  = Шаблон ВМ ISP (Junior) на основе Debian
+        os_descr     = Debian 12
+        name         = ISP
+        tags         = isp
+        ostype       = l26
+        agent        = 1
+        tablet       = 0
+        startup      = order=0,up=10,down=60
+        scsihw       = virtio-scsi-single
+        cpu          = host
+        cores        = 1
+        memory       = 512
+        access_role  = Competitor_ISP
+        firewall_opt = { enable=1, dhcp=1 }
+        network_6    = { bridge=inet, firewall=1, access_role=NoAccess }
+        boot_disk_0  = https://disk.yandex.ru/d/YR3eelCZR_JVXQ/Script-Images/25-REG14-ISP-combined.qcow2
+'
+
+
+#///=========================== Конфигурация варианта установки ===========================\\\#
+
+config_stand_1_var[stand_config]='
+        description        = Стенды ИМэЧ (юниоры) "Сетевое и системное администрирование" 2025. Модуль Б
+        group_display_desc = Стенды ИМэЧ (юниоры) "Сетевое и системное администрирование" 2025. Модуль Б
+        pool_name          = 25-RUq-ModB{0}
+        pool_desc          = Стенд ИМэЧ (юниоры) "Сетевое и системное администрирование" № Б{0}
+        access_user_name   = Competitor-B{0}
+        access_user_desc   = Участник соревнования. Рабочее место № Б{0}
+'
+config_stand_1_var[vm_1]='
+        config_template = ISP
+        network_7       = 🖧: WAN-KLG
+        network_8       = 🖧: WAN-TUL
+        network_9       = 🖧: WAN-EXT
+'
+config_stand_1_var[vm_2]='
+        name            = CLIENT-EXT
+        config_template = Alt-Workstation-10.4
+        network_6       = 🖧: WAN-EXT
+'
+config_stand_1_var[vm_3]='
+        name            = FW-KLG
+        config_template = OPNsense-24.7
+        network_6       = 🖧: WAN-KLG
+        network_7       = 🖧: SW-KLG
+'
+config_stand_1_var[vm_4]='
+        name            = DC-KLG
+        config_template = Alt-Server-10.2
+        cores           = 2
+        memory          = 2048
+        network_6       = { bridge="🖧: SW-KLG", tag=2000 }
+'
+config_stand_1_var[vm_5]='
+        name            = PC-KLG
+        config_template = Alt-Workstation-10.4
+        network_6       = { bridge="🖧: SW-KLG", tag=2010 }
+'
+config_stand_1_var[vm_6]='
+        name            = ARM-KLG
+        config_template = Alt-Workstation-10.4
+        network_6       = { bridge="🖧: SW-KLG", tag=2020 }
+'
+config_stand_1_var[vm_7]='
+        name            = FW-TUL
+        config_template = OPNsense-24.7
+        network_6       = 🖧: WAN-TUL
+        network_7       = 🖧: SRV-TUL
+        network_8       = 🖧: LAN-TUL
+'
+config_stand_1_var[vm_8]='
+        name            = SRV-TUL
+        config_template = Alt-Server-10.2
+        network_6       = 🖧: SRV-TUL
+        disk_1          = 2 GB
+        disk_2          = 2 GB
+'
+config_stand_1_var[vm_9]='
+        name            = PC-TUL
+        config_template = Alt-Workstation-10.4
+        network_6       = 🖧: LAN-TUL
+'
+
+
+#///=========================== Конфигурация варианта установки ===========================\\\#
+
+config_stand_2_var[stand_config]='
+        description        = Стенды ИМэЧ (юниоры) "Сетевое и системное администрирование" 2025. Модуль Б\nПримечание: урезанная по ОЗУ версия до 9 ГБ
+        group_display_desc = Стенды ИМэЧ (юниоры) "Сетевое и системное администрирование" 2025. Модуль Б
+        pool_name          = 25-RUq-ModB{0}
+        pool_desc          = Стенд ИМэЧ (юниоры) "Сетевое и системное администрирование" № Б{0}
+        access_user_name   = Competitor-B{0}
+        access_user_desc   = Участник соревнования. Рабочее место № Б{0}
+'
+config_stand_2_var[vm_1]='
+        config_template = ISP
+        network_7       = 🖧: WAN-KLG
+        network_8       = 🖧: WAN-TUL
+        network_9       = 🖧: WAN-EXT
+'
+config_stand_2_var[vm_2]='
+        name            = CLIENT-EXT
+        config_template = Alt-Workstation-10.4
+        memory          = 1024
+        network_6       = 🖧: WAN-EXT
+'
+config_stand_2_var[vm_3]='
+        name            = FW-KLG
+        config_template = OPNsense-24.7
+        network_6       = 🖧: WAN-KLG
+        network_7       = 🖧: SW-KLG
+'
+config_stand_2_var[vm_4]='
+        name            = DC-KLG
+        config_template = Alt-Server-10.2
+        cores           = 2
+        memory          = 1536
+        network_6       = { bridge="🖧: SW-KLG", tag=2000 }
+'
+config_stand_2_var[vm_5]='
+        name            = PC-KLG
+        config_template = Alt-Workstation-10.4
+        memory          = 1024
+        network_6       = { bridge="🖧: SW-KLG", tag=2010 }
+'
+config_stand_2_var[vm_6]='
+        name            = ARM-KLG
+        config_template = Alt-Workstation-10.4
+        memory          = 1024
+        network_6       = { bridge="🖧: SW-KLG", tag=2020 }
+'
+config_stand_2_var[vm_7]='
+        name            = FW-TUL
+        config_template = OPNsense-24.7
+        network_6       = 🖧: WAN-TUL
+        network_7       = 🖧: SRV-TUL
+        network_8       = 🖧: LAN-TUL
+'
+config_stand_2_var[vm_8]='
+        name            = SRV-TUL
+        config_template = Alt-Server-10.2
+        network_6       = 🖧: SRV-TUL
+        disk_1          = 2 GB
+        disk_2          = 2 GB
+'
+config_stand_2_var[vm_9]='
+        name            = PC-TUL
+        config_template = Alt-Workstation-10.4
+        memory          = 1024
+        network_6       = 🖧: LAN-TUL
+'
+
+
+#///=========================== Конфигурация варианта установки ===========================\\\#
+
+config_stand_3_var[stand_config]='
+        description        = Стенды ИМэЧ (юниоры) "Сетевое и системное администрирование" 2025. Модуль Г
+        group_display_desc = Стенды ИМэЧ (юниоры) "Сетевое и системное администрирование" 2025. Модуль Г
+        pool_name          = 25-RUq-ModG{0}
+        pool_desc          = Стенд ИМэЧ (юниоры) "Сетевое и системное администрирование" № Г{0}
+        access_user_name   = Competitor-G{0}
+        access_user_desc   = Участник соревнования. Рабочее место № Г{0}
+'
+config_stand_3_var[vm_1]='
+        config_template = ISP
+        network_9       = 🖧: WAN-EXT
+        network_10      = 🖧: CL-WAN
+'
+config_stand_3_var[vm_2]='
+        name            = CLIENT-EXT
+        config_template = Alt-Workstation-10.4
+        network_6       = 🖧: WAN-EXT
+'
+config_stand_3_var[vm_3]='
+        name            = CL-GW1
+        config_template = OPNsense-24.7
+        network_6       = 🖧: CL-WAN
+        network_7       = 🖧: CL-LAN
+        network_8       = 🖧: SYNC
+'
+config_stand_3_var[vm_4]='
+        name            = CL-GW2
+        config_template = OPNsense-24.7
+        network_6       = 🖧: CL-WAN
+        network_7       = 🖧: CL-LAN
+        network_8       = 🖧: SYNC
+'
+config_stand_3_var[vm_5]='
+        name            = MGMT-PC
+        config_template = Alt-Workstation-10.4
+        network_6       = 🖧: CL-LAN
+'
+config_stand_3_var[vm_6]='
+        name            = CL-FRONT1
+        config_template = Alt-Server-10.2
+        network_6       = 🖧: CL-LAN
+'
+config_stand_3_var[vm_7]='
+        name            = CL-FRONT2
+        config_template = Alt-Server-10.2
+        network_6       = 🖧: CL-LAN
+'
+config_stand_3_var[vm_8]='
+        name            = CL-BACK1
+        config_template = Alt-Server-10.2
+        network_6       = 🖧: CL-LAN
+'
+config_stand_3_var[vm_9]='
+        name            = CL-BACK2
+        config_template = Alt-Server-10.2
+        network_6       = 🖧: CL-LAN
+'
+
+#<------------------------------ Конец параметров конфигурации ------------------------------->#

@@ -1,78 +1,146 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>AU_Team Resources</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f4f4f4;
-        }
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        img {
-            max-width: 100px; /* Указать подходящий размер */
-            height: auto;
-        }
-        .welcome-message {
-            font-size: 24px;
-            color: #333;
-        }
-        .content {
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .link-section {
-            margin-top: 20px;
-        }
-        .link-section a {
-            display: inline-block;
-            background-color: #007bff;
-            color: white;
-            padding: 10px 15px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .link-section a:hover {
-            background-color: #0056b3;
-        }
-        .footer {
-            margin-top: 40px;
-            text-align: center;
-        }
-        @media (max-width: 600px) {
-            .content, .header, .footer {
-                padding: 10px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <title>AU_Team Resources</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .header img {
+      max-width: 120px;
+    }
+    .welcome-message {
+      font-size: 26px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .year-section {
+      margin-bottom: 40px;
+    }
+    .year-title {
+      font-size: 22px;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #007bff;
+      padding-bottom: 5px;
+    }
+    .card-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .card {
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      padding: 15px;
+      flex: 1 1 calc(50% - 15px);
+      transition: transform 0.2s;
+    }
+    .card:hover {
+      transform: translateY(-3px);
+    }
+    .card a {
+      color: #007bff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .card a:hover {
+      text-decoration: underline;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 60px;
+    }
+    .footer img {
+      width: 40px;
+      margin: 0 10px;
+    }
+    @media (max-width: 600px) {
+      .card {
+        flex: 1 1 100%;
+      }
+    }
+  </style>
 </head>
 <body>
+  <div class="container">
     <div class="header">
-        <img src="src/logos/auteam_logo.png" alt="Логотип AU_Team">
+      <img src="src/logos/auteam_logo.png" alt="Логотип AU_Team">
     </div>
     <div class="welcome-message">
-        Добро пожаловать в пространство AU_Team!
+      Добро пожаловать в пространство AU_Team!
     </div>
-    <div class="content">
-        Здесь мы делимся материалами с чемпионатов. На данный момент доступны следующие ресурсы:
-        <div class="link-section">
-            <a href="hightech-2023/Конкурсное_задание_финал_v9.html">Материалы HighTech 2023</a>
-            <a href="prof-2023/index.html">Материалы Профессионалитет 2023 (финал)</a>
-            <a href="prof-juniors-2023/22RU14SPbtaskPostEventPublication.html">Задание финала Чемпионата по профессиональному мастерству «Профессионалы». Возрастная категория - юниоры (14+)</a>
-            <a href="averina-archive/Олимпиада_Аверина.html">Архив заданий Олимпиада Аверина</a>
-            <a href="prof-2024-semifinal-main/index.html">Профессионалитет-2024, полуфинал</a>
-            <a href="professionals-2024/index.html">Финал Чемпионата по профессиональному мастерству «Профессионалы» 2024</a>
+
+    <!-- 2025 -->
+    <div class="year-section">
+        <div class="year-title">2025</div>
+        <div class="card-grid">
+          <div class="card">
+            <a href="prof-2025/nsa-junior-final/index.html">Финал Чемпионата «Профессионалы» 2025 (Юниоры)</a>
+          </div>
+          <div class="card">
+            <a href="prof-2025/nsa-major-qualifiers/index.html">Отборочный этап Чемпионата «Профессионалы» 2025</a>
+          </div>
         </div>
+      </div>
+
+    <!-- 2024 -->
+    <div class="year-section">
+      <div class="year-title">2024</div>
+      <div class="card-grid">
+        <div class="card">
+          <a href="professionals-2024/index.html">Финал Чемпионата «Профессионалы» 2024</a>
+        </div>
+        <div class="card">
+          <a href="prof-2024-semifinal-main/index.html">Полуфинал Профессионалитет 2024</a>
+        </div>
+      </div>
     </div>
+
+    <!-- 2023 -->
+    <div class="year-section">
+      <div class="year-title">2023</div>
+      <div class="card-grid">
+        <div class="card">
+          <a href="hightech-2023/Конкурсное_задание_финал_v9.html">HighTech 2023</a>
+        </div>
+        <div class="card">
+          <a href="prof-2023/index.html">Профессионалитет 2023 (финал)</a>
+        </div>
+        <div class="card">
+          <a href="prof-juniors-2023/22RU14SPbtaskPostEventPublication.html">Профессионалы. Юниоры (14+)</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Архив -->
+    <div class="year-section">
+      <div class="year-title">Архив</div>
+      <div class="card-grid">
+        <div class="card">
+          <a href="averina-archive/Олимпиада_Аверина.html">Олимпиада Аверина</a>
+        </div>
+      </div>
+    </div>
+
     <div class="footer">
-        <p>Наши ресурсы</p>
-        <a href="https://github.com/auteam-usr"><img src="src/logos/github_logo.png" alt="GitHub"></a>
-        <a href="https://t.me/au_team_news"><img src="src/logos/telegram_logo.png" alt="Telegram"></a>
+      <p>Наши ресурсы</p>
+      <a href="https://github.com/auteam-usr"><img src="src/logos/github_logo.png" alt="GitHub"></a>
+      <a href="https://t.me/au_team_news"><img src="src/logos/telegram_logo.png" alt="Telegram"></a>
     </div>
+  </div>
 </body>
 </html>
